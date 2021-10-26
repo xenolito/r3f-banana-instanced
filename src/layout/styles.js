@@ -34,12 +34,12 @@ export const Container = styled.div`
         font-size: min(10vw, 8rem);
         width: 6ch;
         line-height: 0.85em;
-        color: #202020;
+        color: #fff;
         display: block;
         z-index: 2;
 
         & .outline {
-            -webkit-text-stroke: 0.04ch #343434;
+            -webkit-text-stroke: 0.04ch #fff;
             -webkit-text-fill-color: #0000!important;
         }
     }
@@ -72,7 +72,8 @@ export const Button = styled.button`
     z-index:2;
     margin-right: 2rem;
     background-color: transparent;
-    border: 1px solid #343434;
+    color: ${ (props) => (props.color || '#fff')};
+    border: 1px solid #fff;
     border-radius: 6px;
     font-size: min(1.3rem, 6vw);
     cursor: pointer;
@@ -80,7 +81,9 @@ export const Button = styled.button`
     transition: all .3s ease;
 
     &:hover  {
-        background-color: #ffffff88;
+        background-color: ${ (props) => props.hovercolors?.bg || 'transparent'};
+        color: ${(props) => (props.hovercolors?.color || '#343434')};
+        border: 1px solid ${(props) => (props.hovercolors?.border || props.hovercolors?.color)};
     }
 
 `

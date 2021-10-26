@@ -4,7 +4,7 @@ export const ColorsContext = createContext()
 
 const ColorsProvider = (props) => {
 
-const [bgColor, setBgColor] = useState([255, 191, 64, 1])
+// const [bgColor, setBgColor] = useState([255, 191, 64, 1])
 
     const themes = {
         banana: {

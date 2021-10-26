@@ -3,7 +3,7 @@ import { useRef, useState, useContext, instancedMesh, useLayoutEffect, useEffect
 import { useFrame, useThree } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 
-import { ColorsContext } from '../context/ColorsProvider'
+// import { ColorsContext } from '../context/ColorsProvider'
 import { FruitsContext } from '../context/FruitsProvider'
 
 const Banana = ({ z, depth, bgTo, id }) => {
@@ -14,7 +14,7 @@ const Banana = ({ z, depth, bgTo, id }) => {
 
 
 
-    const {fruit, cambioFruit} = useContext(FruitsContext)
+    const {fruit} = useContext(FruitsContext)
 
 
 
@@ -23,7 +23,7 @@ const Banana = ({ z, depth, bgTo, id }) => {
     // const dracoDecoderTemp = 'https://www.gstatic.com/draco/versioned/decoders/1.4.0/'
     const dracoDecoderTemp = './gltf/'
 
-    const { nodes, materials } = useGLTF('./banana-transformed.glb', dracoDecoderTemp)
+    // const { nodes, materials } = useGLTF('./banana-transformed.glb', dracoDecoderTemp)
 
     // const { nodes, materials } = useGLTF('/kiwi-transformed.glb')
 
@@ -46,7 +46,7 @@ const Banana = ({ z, depth, bgTo, id }) => {
         }
     }
 
-    const [data, setData] = useState({
+    const [data] = useState({
         x: THREE.MathUtils.randFloatSpread(2), // -1 to 1
         y: THREE.MathUtils.randFloatSpread(height),
         z: z,
@@ -114,14 +114,14 @@ const Banana = ({ z, depth, bgTo, id }) => {
 export const Instances = ({ count = 40, temp = new THREE.Object3D(), z = 80, depth = 80 }) => {
     const ref = useRef()
     const { viewport, camera } = useThree()
-    const [clicked, setClicked] = useState(false)
+    // const [clicked, setClicked] = useState(false)
     let { width, height } = viewport.getCurrentViewport(camera, [0, 0, z])
 
     const { nodes, materials } = useGLTF('./banana-transformed.glb')
 
     const geometry = nodes.banana.geometry
 
-    const [data, setData] = useState({
+    const [data] = useState({
         x: THREE.MathUtils.randFloatSpread(2), // -1 to 1
         y: THREE.MathUtils.randFloatSpread(height),
         z: z,
@@ -145,7 +145,7 @@ export const Instances = ({ count = 40, temp = new THREE.Object3D(), z = 80, dep
         }
         // Update the instance
         ref.current.instanceMatrix.needsUpdate = true
-    }, [])
+    }, [count,data,temp,width])
 
     useFrame((state) => {
         // console.log(ref.current.instanceMatrix)

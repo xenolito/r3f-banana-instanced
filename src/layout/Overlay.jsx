@@ -1,11 +1,11 @@
 import { Container, Button } from './styles'
-import { ColorsContext } from '../context/ColorsProvider'
+// import { ColorsContext } from '../context/ColorsProvider'
 import { FruitsContext } from '../context/FruitsProvider'
 import { useContext } from 'react'
 
  const Overlay = () => {
 
-    const {theme, cambioTheme} = useContext(ColorsContext)
+    // const {theme, cambioTheme} = useContext(ColorsContext)
 
     const {fruit, cambioFruit} = useContext(FruitsContext)
 
@@ -37,7 +37,7 @@ import { useContext } from 'react'
              <Button onClick={() => changeFruta('kiwi')}>
                 Quiero Kiwis
             </Button>
-             <Button onClick={() => changeFruta('banana')}>
+             <Button onClick={() => changeFruta('banana')} color={'#fff'} hovercolors={{color: '#ffff00', bg: '#ff0000'}}>
                 Quiero Plátanos
             </Button>
         </Container>

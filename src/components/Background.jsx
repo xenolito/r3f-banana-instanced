@@ -1,12 +1,12 @@
 import React, {useContext} from 'react'
 import {ColorsContext} from '../context/ColorsProvider'
 import { FruitsContext } from '../context/FruitsProvider'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 
 
 const Background = () => {
-    const {theme, cambioTheme} = useContext(ColorsContext)
-    const {fruit, cambioFruit} = useContext(FruitsContext)
+    const {theme} = useContext(ColorsContext)
+    const {fruit} = useContext(FruitsContext)
 
     useFrame(state => {
         // console.log('background');

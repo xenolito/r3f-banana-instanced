@@ -1,18 +1,17 @@
 
 import React, { Suspense, useState, useContext } from 'react'
-import { Canvas, extend } from '@react-three/fiber'
-import { Html, useProgress, Stats, useContextBridge, OrbitControls, Effects } from '@react-three/drei'
-import { EffectComposer, DepthOfField, Noise, Vignette } from '@react-three/postprocessing'
-import Banana, {Instances} from './Banana'
+import { Canvas} from '@react-three/fiber'
+import { EffectComposer, DepthOfField} from '@react-three/postprocessing'
+import Banana from './Banana'
 import {ColorsContext} from '../context/ColorsProvider'
-import FruitsProvider, {FruitsContext} from '../context/FruitsProvider'
+import {FruitsContext} from '../context/FruitsProvider'
 import Background from './Background'
 
 
 
 
 const PageBackground = ({count, depth}) => {
-    const [bgColor, setBgColor] = useState([255, 191, 64, 1])
+    const [bgColor] = useState([255, 191, 64, 1])
 
     const {fruit, cambioFruit} = useContext(FruitsContext)
 
