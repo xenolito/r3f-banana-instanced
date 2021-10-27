@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import React, { useRef, useMemo } from 'react'
 import { Canvas, useFrame, useThree, extend} from '@react-three/fiber'
-import { EffectComposer, DepthOfField} from '@react-three/postprocessing'
+// import { EffectComposer, DepthOfField} from '@react-three/postprocessing'
+import { EffectComposer, DepthOfField, Bloom, Noise, Vignette, DotScreen } from "@react-three/postprocessing"
 import {useGLTF} from '@react-three/drei'
 // import React from 'react'
 // import { Effects } from '@react-three/drei'
@@ -72,7 +73,7 @@ const Swarm = ({count}) => {
                 (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10,
             )
 
-            dummy.scale.set(s,s,s)
+            dummy.scale.set(s*1.6,s*1.6,s*1.6)
             dummy.rotation.set(s*5,s*5,s*5)
             dummy.updateMatrix()
 
@@ -87,16 +88,16 @@ const Swarm = ({count}) => {
 
     return (
         <>
-            <pointLight ref={light} distance={60} intensity={0.2} color="lightblue"/>
-            <instancedMesh ref={mesh} args={[geometry, material, count]} >
-                {/* <dodecahedronBufferGeometry args={[1,0]}/> */}
-                {/* <meshStandardMaterial color="black" /> */}
-{/*                 <meshStandardMaterial
-                    attach="material"
-                    map={model.nodes['banana'].materials.skin.map}
-                    wireframe={false}
-                />
- */}        </instancedMesh>
+            <pointLight postition={[0,0,60]} ref={light} distance={6} intensity={0.6} color="white"/>
+            <instancedMesh ref={mesh} args={[null, null, count]} >
+                <tetrahedronBufferGeometry args={[1,0]}/>
+                <dodecahedronBufferGeometry args={[1,0]}/>
+
+                {/* <torusKnotBufferGeometry args={[3, 1, 60, 60]} /> */}
+                <meshStandardMaterial color="black" />
+            </instancedMesh>
+
+            {/* <instancedMesh ref={mesh} args={[geometry, material, count]} /> */}
         </>
     )
 }
@@ -121,6 +122,13 @@ const Organic = () => {
             className="webgl"
             style={{ position: 'fixed', height: '100vh', zIndex: '1' }}
         >
+            <color attach="background" args={['#141414']}/>
+            {/* <ColorsContext.Provider value={{theme, cambioTheme}} >
+                <FruitsContext.Provider value={{fruit, cambioFruit}} >
+                    <Background />
+                </FruitsContext.Provider>
+            </ColorsContext.Provider> */}
+
             <pointLight intensity={0.2} color="white" />
             <spotLight intensity={1.2} position={[70,70,70]} penumbra={1} color="lightblue" />
             <Swarm count={600} />
@@ -129,14 +137,12 @@ const Organic = () => {
                 <unrealBloomPass attachArray="passes" args={[undefined, 1.5, 1, 0]} />
             </Effects> */}
 
-            {/* <EffectComposer multisampling={0}>
-                <DepthOfField
-                    target={[0, 0, 70 / 2]}
-                    focalLength={0.5}
-                    bokehScale={6}
-                    height={700}
-                />
-            </EffectComposer> */}
+            <EffectComposer disableNormalPass={true} multisampling={0}>
+                <DepthOfField target={[0, 0, 30 / 2]} focusDistance={0} focalLength={0.05} bokehScale={3} height={380} />
+                <Bloom luminanceThreshold={3} luminanceSmoothing={1.1} height={300} opacity={3} />
+                <Noise opacity={0.025} />
+                <Vignette eskil={false} offset={0.1} darkness={1.1} />
+            </EffectComposer>
 
         </Canvas>
     )
