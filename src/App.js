@@ -20,8 +20,8 @@ export default function App({ count = 60, depth = 80 }) {
             <ColorsProvider>
             <FruitsProvider>
                 <Suspense fallback={null}>
-                    <PageBackground count={count} depth={depth}/>
-                    {/* <Organic /> */}
+                    {/* <PageBackground count={count} depth={depth}/> */}
+                    <Organic />
                     <FadeIn />
                 </Suspense>
                 <Overlay />
