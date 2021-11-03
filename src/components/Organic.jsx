@@ -44,7 +44,7 @@ const Swarm = ({count}) => {
         for (let i = 0; i < count; i++) {
             const t = Math.random() * 100
             const factor = 20 + Math.random() * 100
-            const speed = 0.01 + Math.random() / 200
+            const speed = 0.005 + Math.random() / 100
             const xFactor = -50 + Math.random() * 100
             const yFactor = -50 + Math.random() * 100
             const zFactor = -50 + Math.random() * 100
@@ -59,7 +59,7 @@ const Swarm = ({count}) => {
         particles.forEach((particle, i) => {
             let { t, factor, speed, xFactor, yFactor, zFactor } = particle
 
-            t = particle.t += speed / 2
+            t = particle.t += speed / 1.5
             const a = Math.cos(t) + Math.sin(t * 1) / 10
             const b = Math.cos(t) + Math.sin(t * 2) / 10
             const s = Math.cos(t)
@@ -73,7 +73,14 @@ const Swarm = ({count}) => {
                 (particle.my / 10) * b + zFactor + Math.cos((t / 10) * factor) + (Math.sin(t * 3) * factor) / 10,
             )
 
-            dummy.scale.set(s*1.6,s*1.6,s*1.6)
+            // dummy.position.set(
+            //     (particle.mx / 10) + Math.sin(t/20) * factor * a + xFactor + Math.cos(t * 10) * a ,
+            //     (particle.my / 10) + Math.cos(t/20) * factor * a + yFactor + Math.sin(t * 10) * b,
+            //     (particle.my / 10) + Math.sin(t*2/10) * factor * a + yFactor + Math.cos(t * 10)
+
+            // )
+
+            dummy.scale.set(s,s,s)
             dummy.rotation.set(s*5,s*5,s*5)
             dummy.updateMatrix()
 
@@ -88,13 +95,13 @@ const Swarm = ({count}) => {
 
     return (
         <>
-            <pointLight postition={[0,0,60]} ref={light} distance={6} intensity={0.6} color="white"/>
+            <pointLight postition={[0,0,10]} ref={light} distance={1} intensity={0.6} color="white"/>
             <instancedMesh ref={mesh} args={[null, null, count]} >
                 <tetrahedronBufferGeometry args={[1,0]}/>
-                <dodecahedronBufferGeometry args={[1,0]}/>
-
-                {/* <torusKnotBufferGeometry args={[3, 1, 60, 60]} /> */}
-                <meshStandardMaterial color="black" />
+                <dodecahedronBufferGeometry args={[2,0]} />
+                {/* <torusBufferGeometry args={[1.1,1,12,12,6.3]}/> */}
+                {/* <sphereBufferGeometry  args={[2,15,15]}/> */}
+                <meshStandardMaterial color="black" wireframe={false} />
             </instancedMesh>
 
             {/* <instancedMesh ref={mesh} args={[geometry, material, count]} /> */}
@@ -122,7 +129,7 @@ const Organic = () => {
             className="webgl"
             style={{ position: 'fixed', height: '100vh', zIndex: '1' }}
         >
-            <color attach="background" args={['#141414']}/>
+            <color attach="background" args={['#080808']}/>
             {/* <ColorsContext.Provider value={{theme, cambioTheme}} >
                 <FruitsContext.Provider value={{fruit, cambioFruit}} >
                     <Background />
@@ -131,7 +138,7 @@ const Organic = () => {
 
             <pointLight intensity={0.2} color="white" />
             <spotLight intensity={1.2} position={[70,70,70]} penumbra={1} color="lightblue" />
-            <Swarm count={600} />
+            <Swarm count={800} />
             {/* <Effects>
                 <waterPass attachArray="passes" factor={2} />
                 <unrealBloomPass attachArray="passes" args={[undefined, 1.5, 1, 0]} />
@@ -139,8 +146,8 @@ const Organic = () => {
 
             <EffectComposer disableNormalPass={true} multisampling={0}>
                 <DepthOfField target={[0, 0, 30 / 2]} focusDistance={0} focalLength={0.05} bokehScale={3} height={380} />
-                <Bloom luminanceThreshold={3} luminanceSmoothing={1.1} height={300} opacity={3} />
-                <Noise opacity={0.025} />
+                <Bloom luminanceThreshold={0.5} luminanceSmoothing={1.1} height={300} opacity={3} />
+                <Noise opacity={0.0325} />
                 <Vignette eskil={false} offset={0.1} darkness={1.1} />
             </EffectComposer>
 
